@@ -14,4 +14,6 @@
     <string name="sendEmail_text">Manda e-mail</string>
     <string name="cellNumber_text">Inserisci numero di telefono</string>
     <string name="inputError">Inserire valori validi nei campi</string>
+    <string name="checkout_text">CHECKOUT</string>
+    <string name="welcome_text">Benvenuto su GiustoMangia!</string>
 </resources>

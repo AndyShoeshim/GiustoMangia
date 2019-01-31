@@ -64,7 +64,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         if(view.getId()==R.id.loginButton) {
-            doLogin();
+            if(doLogin())
+                startActivity(new Intent(this,MainActivity.class));
         } else if(view.getId()==R.id.registerButton) {
             Intent i = new Intent(this,RegisterActivity.class);
             i.putExtra("statoTema",darkTheme); // passaggio della variabile booleana per il dark theme
