@@ -1,13 +1,16 @@
 package com.corsoandroid.giustomangia.ui.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 import com.corsoandroid.giustomangia.R;
 import com.corsoandroid.giustomangia.adapters.RestorauntAdapters;
@@ -21,16 +24,25 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    LinearLayout layout;
     RecyclerView restorauntRV;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
     ArrayList<Restoraunt> data;
+    CardView cardView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        layout = findViewById(R.id.layoutMain);
+        if(getIntent().getBooleanExtra("statoTema",false))
+        {
+            layout.setBackgroundColor(getResources().getColor(R.color.colorDarkTheme,null));
+        } else
+            layout.setBackgroundColor(Color.WHITE);
+
         restorauntRV = findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(this);
         adapter = new RestorauntAdapters(this,getData());
@@ -41,9 +53,9 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Restoraunt> getData() {
         data = new ArrayList<>();
-        Restoraunt r1 = new Restoraunt("Burger King ", "Via Tiburtina 58 ",10.00f);
-        Restoraunt r2 = new Restoraunt("McDonald's ", "Via Pietralata 666 ", 8.00f);
-        Restoraunt r3 = new Restoraunt("Tira e molla ", "Via Enna 4 ",10.00f);
+        Restoraunt r1 = new Restoraunt("Burger King ", "Via Tiburtina 58 ",10.00f,R.drawable.ic_image2vector);
+        Restoraunt r2 = new Restoraunt("McDonald's ", "Via Pietralata 666 ", 8.00f,R.drawable.ic_image2vector);
+        Restoraunt r3 = new Restoraunt("Tira e molla ", "Via Enna 4 ",10.00f,R.drawable.ic_image2vector);
         data.add(r1);
         data.add(r2);
         data.add(r3);

@@ -23,6 +23,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     LinearLayout l;
     Button loginButton;
+
     Button registerButton;
     Switch s;
     EditText emailText, passText;
@@ -32,7 +33,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-
         loginButton = findViewById(R.id.loginButton);
         registerButton = findViewById(R.id.registerButton);
         emailText = findViewById(R.id.testoEmail);
@@ -69,8 +69,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         if(view.getId()==R.id.loginButton) {
-            if(doLogin())
-                startActivity(new Intent(this,MainActivity.class));
+            if(doLogin()) {
+                Intent i = new Intent(this, MainActivity.class);
+                i.putExtra("statoTema",darkTheme);
+                startActivity(i);
+            }
         } else if(view.getId()==R.id.registerButton) {
             Intent i = new Intent(this,RegisterActivity.class);
             i.putExtra("statoTema",darkTheme); // passaggio della variabile booleana per il dark theme
