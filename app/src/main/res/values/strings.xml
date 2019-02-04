@@ -16,4 +16,5 @@
     <string name="inputError">Inserire valori validi nei campi</string>
     <string name="checkout_text">CHECKOUT</string>
     <string name="welcome_text">Benvenuto su GiustoMangia!</string>
+    <string name="ordineMin_text">Ordine minimo pari a  </string>
 </resources>

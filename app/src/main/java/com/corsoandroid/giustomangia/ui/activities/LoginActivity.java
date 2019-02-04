@@ -10,6 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.Toolbar;
 
 import com.corsoandroid.giustomangia.R;
 import com.corsoandroid.giustomangia.Utilities;
@@ -51,10 +52,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if(b) {
                     darkTheme=true;
                     l.setBackgroundColor(getResources().getColor(R.color.colorDarkTheme,null));
+                    emailText.setTextColor(getResources().getColor(R.color.colorPrimary,null));
+                    passText.setTextColor(getResources().getColor(R.color.colorPrimary,null));
                 }
                 else {
                     darkTheme=false;
                     l.setBackgroundColor(Color.WHITE);
+                    emailText.setTextColor(getResources().getColor(R.color.colorDarkTheme,null));
+                    passText.setTextColor(getResources().getColor(R.color.colorDarkTheme,null));
                 }
             }
         }); // LISTENER DELLO STATO DELLO SWITCH

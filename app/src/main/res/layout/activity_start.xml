@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/email_hint"
         android:textStyle="bold"
+        android:textColor="@color/colorDarkTheme"
         android:inputType="textEmailAddress"
         />
 
