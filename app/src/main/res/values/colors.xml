@@ -3,6 +3,8 @@
     <color name="colorPrimary">#df0620</color>
     <color name="colorPrimaryDark">#df0620</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorBlack">#000000</color>
     <color name="colorDarkTheme">#282828</color>
     <color name="colorBackgroundRestoraunt">#b2b2b3</color>
+    <color name="colorCreamyWhite">#b7bdac</color>
 </resources>

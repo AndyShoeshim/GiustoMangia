@@ -17,4 +17,7 @@
     <string name="checkout_text">CHECKOUT</string>
     <string name="welcome_text">Benvenuto su GiustoMangia!</string>
     <string name="ordineMin_text">Ordine minimo pari a  </string>
+    <string name="changeLayout_text">Cambia layout</string>
+    <string name="carrello_text">TOTALE: </string>
+    <string name="erroreNumPortata">Non puoi diminuire se ne hai 0!</string>
 </resources>

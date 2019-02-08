@@ -10,7 +10,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
-import android.widget.Toolbar;
 
 import com.corsoandroid.giustomangia.R;
 import com.corsoandroid.giustomangia.Utilities;
@@ -23,7 +22,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     LinearLayout l;
     Button loginButton;
-
     Button registerButton;
     Switch s;
     EditText emailText, passText;
@@ -32,7 +30,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
+        setContentView(R.layout.activity_login);
         loginButton = findViewById(R.id.loginButton);
         registerButton = findViewById(R.id.registerButton);
         emailText = findViewById(R.id.testoEmail);

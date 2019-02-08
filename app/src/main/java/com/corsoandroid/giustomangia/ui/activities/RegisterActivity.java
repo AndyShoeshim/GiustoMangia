@@ -30,18 +30,14 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         email=findViewById(R.id.testoEmail);
         password=findViewById(R.id.testoPassword);
         confermaPassword=findViewById(R.id.confermaPassword);
         numTelefono=findViewById(R.id.numTelefono);
         b=findViewById(R.id.registerButton);
         layout=findViewById(R.id.layoutRegister);
-        if(getIntent().getBooleanExtra("statoTema",false))
-        {
-            layout.setBackgroundColor(getResources().getColor(R.color.colorDarkTheme,null));
-        } else
-            layout.setBackgroundColor(Color.WHITE);
+        checkDarkTheme();
+
 
         email.addTextChangedListener(new TextWatcher() {
             @Override
@@ -120,5 +116,13 @@ public class RegisterActivity extends AppCompatActivity {
             Utilities.showToast(this,R.string.registerGood_text);
         else
             Utilities.showToast(this,R.string.registerBad_text);
+    }
+
+    public void checkDarkTheme(){
+        if(getIntent().getBooleanExtra("statoTema",false))
+        {
+            layout.setBackgroundColor(getResources().getColor(R.color.colorDarkTheme,null));
+        } else
+            layout.setBackgroundColor(Color.WHITE);
     }
 }
