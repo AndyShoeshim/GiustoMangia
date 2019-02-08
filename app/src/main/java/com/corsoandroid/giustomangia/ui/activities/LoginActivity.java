@@ -56,8 +56,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 else {
                     darkTheme=false;
                     l.setBackgroundColor(Color.WHITE);
-                    emailText.setTextColor(getResources().getColor(R.color.colorDarkTheme,null));
-                    passText.setTextColor(getResources().getColor(R.color.colorDarkTheme,null));
+                    //emailText.setTextColor(getResources().getColor(R.color.colorDarkTheme,null));
+                    //passText.setTextColor(getResources().getColor(R.color.colorDarkTheme,null));
                 }
             }
         }); // LISTENER DELLO STATO DELLO SWITCH

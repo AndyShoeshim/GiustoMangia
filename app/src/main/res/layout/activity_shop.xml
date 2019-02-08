@@ -5,6 +5,7 @@
     android:id="@+id/relativeLayoutCheckout">
 
     <LinearLayout
+        android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
@@ -20,10 +21,10 @@
             android:layout_height="wrap_content"
             />
 
-        <TextView
+        <TextView xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/nomeRistorante"
             android:textStyle="bold"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorTextOnPrimary"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -56,7 +57,7 @@
             android:id="@+id/totaleCarrello"
             android:text="@string/carrello_text"
             android:textStyle="bold"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorTextBlack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"/>
@@ -65,6 +66,7 @@
             android:id="@+id/progressBar"
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:progressTint="@color/colorPrimaryDark"
+            android:progressBackgroundTint="@color/colorSecondary"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="10dp"/>
@@ -73,6 +75,7 @@
             android:layout_marginTop="10dp"
             android:id="@+id/pulsanteCheckout"
             android:text="@string/checkout_text"
+            android:backgroundTint="@color/colorSecondary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         

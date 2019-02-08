@@ -41,14 +41,14 @@
 
     <TextView
         android:id="@+id/restaurantIndirizzo"
-        android:textColor="@color/colorDarkTheme"
+        android:textColor="@color/colorTextBlack"
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/restaurantOrdineMinimo"
-        android:textColor="@color/colorDarkTheme"
+        android:textColor="@color/colorTextBlack"
         android:textStyle="bold"
         android:text="@string/ordineMin_text"
         android:layout_width="wrap_content"

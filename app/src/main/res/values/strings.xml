@@ -20,4 +20,5 @@
     <string name="changeLayout_text">Cambia layout</string>
     <string name="carrello_text">TOTALE: </string>
     <string name="erroreNumPortata">Non puoi diminuire se ne hai 0!</string>
+    <string name="darkMode_text">DARK MODE</string>
 </resources>

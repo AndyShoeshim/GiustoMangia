@@ -41,7 +41,7 @@
                 <TextView
                     android:id="@+id/restaurantIndirizzo"
                     android:textStyle="bold"
-                    android:textColor="@color/colorDarkTheme"
+                    android:textColor="@color/colorTextBlack"
                     android:layout_gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -49,7 +49,7 @@
                 <TextView
                     android:textStyle="bold"
                     android:id="@+id/restaurantOrdineMinimo"
-                    android:textColor="@color/colorDarkTheme"
+                    android:textColor="@color/colorTextBlack"
                     android:layout_gravity="bottom"
                     android:text="@string/ordineMin_text"
                     android:layout_width="match_parent"

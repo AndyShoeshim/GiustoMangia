@@ -19,13 +19,16 @@
         android:layout_height="wrap_content"
         android:hint="@string/email_hint"
         android:inputType="textEmailAddress"
+        android:textColor="@color/colorTextBlack"
         android:textStyle="bold"/>
+
     <EditText
         android:id="@+id/numTelefono"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/cellNumber_text"
         android:textStyle="bold"
+        android:textColor="@color/colorTextBlack"
         android:inputType="phone"
         />
 
@@ -35,6 +38,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/password_hint"
         android:textStyle="bold"
+        android:textColor="@color/colorTextBlack"
         android:inputType="textPassword"/>
 
 
@@ -44,6 +48,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/passwordConfirm_hint"
         android:textStyle="bold"
+        android:textColor="@color/colorTextBlack"
         android:inputType="textPassword"/>
 
     <LinearLayout
@@ -54,6 +59,8 @@
         <Button
             android:id="@+id/registerButton"
             android:text="@string/register_text"
+            android:textColor="@color/colorTextBlack"
+            android:backgroundTint="@color/colorSecondary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"

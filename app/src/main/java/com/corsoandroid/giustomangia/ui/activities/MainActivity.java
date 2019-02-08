@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import com.corsoandroid.giustomangia.R;
+import com.corsoandroid.giustomangia.Test;
 import com.corsoandroid.giustomangia.adapters.RestaurantAdapters;
 import com.corsoandroid.giustomangia.datamodels.Restaurant;
 
@@ -43,24 +44,13 @@ public class MainActivity extends AppCompatActivity {
         checkDarkTheme();
         restorauntRV = findViewById(R.id.recyclerView);
         layoutManager = getLayoutManager(getSavedLayoutManager());
-        adapter = new RestaurantAdapters(this,getData());
+        adapter = new RestaurantAdapters(this, Test.getData());
         adapter.setGrid(getSavedLayoutManager());
 
         restorauntRV.setAdapter(adapter);
         restorauntRV.setLayoutManager(layoutManager);
     }
 
-    private ArrayList<Restaurant> getData() {
-        data = new ArrayList<>();
-        Restaurant r1 = new Restaurant("Burger King ", "Via Tiburtina 58 ", 10.00f, "https://banner2.kisspng.com/20180414/jce/kisspng-hamburger-burger-king-whopper-fast-food-burger-king-5ad1e6bf9fe231.7333694715237055356549.jpg");
-        Restaurant r2 = new Restaurant("McDonald's ", "Via Pietralata 666 ", 8.00f, "https://diylogodesigns.com/wp-content/uploads/2016/04/Mcdonalds-logo-png-Transparent-768x538.png");
-        Restaurant r3 = new Restaurant("Tira e molla ", "Via Enna 4 ", 10.00f, "https://tiraemollaroma.it/wp-content/uploads/2017/04/tiraemolla_nero.png");
-        data.add(r1);
-        data.add(r2);
-        data.add(r3);
-
-        return data;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
