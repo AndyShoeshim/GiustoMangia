@@ -21,4 +21,6 @@
     <string name="carrello_text">TOTALE: </string>
     <string name="erroreNumPortata">Non puoi diminuire se ne hai 0!</string>
     <string name="darkMode_text">DARK MODE</string>
+    <string name="payment_text">PAGAMENTO</string>
+    <string name="riepilogo_text">RIEPILOGO ORDINE</string>
 </resources>

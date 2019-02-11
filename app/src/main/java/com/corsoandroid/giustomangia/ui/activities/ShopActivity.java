@@ -1,10 +1,12 @@
 package com.corsoandroid.giustomangia.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -24,7 +26,7 @@ import java.util.ArrayList;
  * Created by Andrea on 31/01/2019.
  */
 
-public class ShopActivity extends AppCompatActivity implements MenuAdapter.onQuantityChangeListener {
+public class ShopActivity extends AppCompatActivity implements MenuAdapter.onQuantityChangeListener,View.OnClickListener {
 
 
     RelativeLayout layout;
@@ -68,6 +70,7 @@ public class ShopActivity extends AppCompatActivity implements MenuAdapter.onQua
         progressBar.setMax((int)getRestaurant().getOrdineMinimo()*100);
         restaurant = getRestaurant();
         menuAdapter.setOnQuantityChangeListener(this);
+        pulsanteCheckout.setOnClickListener(this);
     }
 
 
@@ -80,10 +83,10 @@ public class ShopActivity extends AppCompatActivity implements MenuAdapter.onQua
     }
 
     private void updateTotal(float f) {
-        if(total>=0) {
+        if (total >= 0) {
             total += f;
             totaleCarrello.setText(String.valueOf(total));
-        } else
+        } else if (total == 0)
             totaleCarrello.setText("0");
     }
 
@@ -92,5 +95,22 @@ public class ShopActivity extends AppCompatActivity implements MenuAdapter.onQua
         updateTotal(price);
         updateProgressBar((int)(total*100));
         totaleCarrello.setText(String.format("TOTALE: %s $", String.valueOf(total)));
+        checkOutEnabled(total);
+    }
+
+    public void checkOutEnabled(float f) {
+        if (getRestaurant().getOrdineMinimo()<=f) {
+            pulsanteCheckout.setEnabled(true);
+        } else if (getRestaurant().getOrdineMinimo()>f) {
+            pulsanteCheckout.setEnabled(false);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==pulsanteCheckout.getId()){
+            Intent i = new Intent(this,CheckoutActivity.class);
+            startActivity(i);
+        }
     }
 }

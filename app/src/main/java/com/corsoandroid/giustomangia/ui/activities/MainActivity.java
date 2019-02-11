@@ -27,9 +27,12 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     LinearLayout layout;
-    RecyclerView restorauntRV;
+    RecyclerView restorauntRV; // le recycler view permette di visualizzare una grande quantità di dati in una view limitata
     RecyclerView.LayoutManager layoutManager;
     RestaurantAdapters adapter;
+    // per utilizzare una recyclerview c'è bisogno di un layout manager e di un adapter. Il primo permette
+    // di misurare e posizione le item view nella recyclerview e determinare quando riciclare gli elementi non più visibili.
+    // L'adapter serve per legare i dati e gli itemview legati alla visualizzazione di questi dati alla recyclerview
     ArrayList<Restaurant> data;
     SharedPreferences sharedPreferences;
 

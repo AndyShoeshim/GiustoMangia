@@ -41,6 +41,7 @@ public class RestaurantAdapters extends RecyclerView.Adapter {
         this.context = context;
     }
 
+    //questo metoto serve a inizializzare le variabili relative la viewholder dei dati
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
@@ -53,6 +54,7 @@ public class RestaurantAdapters extends RecyclerView.Adapter {
         return new RestorauntViewHolder(view);
     }
 
+    //questo metodo viene chiamato ogni volta che la viewholder sta per essere creata
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         RestorauntViewHolder rvh = (RestorauntViewHolder) holder;

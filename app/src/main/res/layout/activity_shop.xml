@@ -5,7 +5,6 @@
     android:id="@+id/relativeLayoutCheckout">
 
     <LinearLayout
-        android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
@@ -15,21 +14,21 @@
 
         <ImageView
             android:id="@+id/logoRistorante"
-            android:layout_gravity="right"
-            android:layout_width="wrap_content"
+            android:gravity="start"
+            android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             />
 
         <TextView xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/nomeRistorante"
             android:textStyle="bold"
-            android:textColor="@color/colorTextOnPrimary"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextBlack"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
+            android:layout_height="match_parent"
+            android:gravity="right"
             />
 
     </LinearLayout>
@@ -77,7 +76,8 @@
             android:text="@string/checkout_text"
             android:backgroundTint="@color/colorSecondary"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            />
         
     </LinearLayout>
     

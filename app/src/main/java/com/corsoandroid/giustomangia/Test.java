@@ -1,5 +1,6 @@
 package com.corsoandroid.giustomangia;
 
+import com.corsoandroid.giustomangia.datamodels.Ordine;
 import com.corsoandroid.giustomangia.datamodels.Product;
 import com.corsoandroid.giustomangia.datamodels.Restaurant;
 
@@ -10,6 +11,9 @@ import java.util.ArrayList;
  */
 
 public class Test {
+
+
+
 
     public static ArrayList<Product> creaPortate() {
         ArrayList<Product> productArrayList = new ArrayList<>();
@@ -55,5 +59,25 @@ public class Test {
         restaurantArrayList.add(r3);
 
         return restaurantArrayList;
+    }
+
+    public static Ordine getOrdine() {
+        ArrayList<Product> productArrayList = new ArrayList<>();
+        Product p1 = new Product("Whopper",5f);
+        Product p2 = new Product("Chicken Bacon", 8f);
+        Product p3 = new Product("Patatine", 1f);
+        Product p4 = new Product("Insalata", 0.5f);
+        Product p5 = new Product("Coca-cola", 1f);
+        productArrayList.add(p1);
+        productArrayList.add(p2);
+        productArrayList.add(p3);
+        productArrayList.add(p4);
+        productArrayList.add(p5);
+
+        Restaurant r = getData().get(1);
+
+        Ordine ordine = new Ordine(r,productArrayList);
+
+        return ordine;
     }
 }
