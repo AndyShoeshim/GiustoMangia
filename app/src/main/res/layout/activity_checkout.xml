@@ -5,6 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/header"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <TextView
         android:id="@+id/riepilogoOrdine"
         android:text="@string/riepilogo_text"
@@ -13,38 +19,65 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+        <TextView
+            android:id="@+id/nomeRistoranteOrdine"
+            android:textStyle="bold"
+            android:textColor="@color/colorTextBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/indirizzoRistoranteOrdine"
+            android:textStyle="bold"
+            android:textColor="@color/colorTextBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_margin="15dp"
+        android:layout_height="1dp"
+        android:background="@color/colorTextBlack"
+        android:layout_below="@id/header"
+        android:id="@+id/line1_v"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/carrelloProdotti"
         android:layout_centerVertical="true"
-        android:layout_alignEnd="@+id/riepilogoOrdine"
+        android:layout_below="@id/line1_v"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </android.support.v7.widget.RecyclerView>
 
-    <LinearLayout
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_margin="15dp"
+        android:layout_height="1dp"
+        android:background="@color/colorTextBlack"
+        android:layout_below="@+id/carrelloProdotti"
+        android:id="@+id/line2_v"/>
+
 
     <TextView
         android:id="@+id/totaleCosto"
-        android:text="@string/carrello_text"
-        android:textStyle="bold"
-        android:textColor="@color/colorTextBlack"
-        android:layout_gravity="top"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/paymentButton"
+        android:layout_alignParentStart="true"
+        android:text="@string/carrello_text"
+        android:textColor="@color/colorTextBlack"
+        android:textStyle="bold" />
 
     <Button
+        android:layout_alignParentBottom="true"
         android:id="@+id/paymentButton"
-        android:layout_marginTop="150dp"
         android:background="@color/colorSecondary"
         android:text="@string/payment_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:enabled="true"/>
-
-    </LinearLayout>
 
 </RelativeLayout>

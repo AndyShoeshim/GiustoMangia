@@ -8,10 +8,13 @@ public class Product {
     private String nome;
     private float costo;
     public int quantita;
+    public float totale;
 
-    public Product(String nome, float costo) {
+    public Product(String nome, float costo, int quantita) {
         this.nome=nome;
         this.costo=costo;
+        this.quantita=quantita;
+        calcoloTot();
     }
 
     public void setNome(String nome) {
@@ -46,5 +49,9 @@ public class Product {
         if(!(this.quantita==0)) {
             this.quantita--;
         }
+    }
+
+    public void calcoloTot() {
+        totale=getCosto()*getQuantita();
     }
 }

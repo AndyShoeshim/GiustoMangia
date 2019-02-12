@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorSecondary"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    
+
+    <TextView
+        android:id="@+id/qtprodotto"
+        android:layout_centerVertical="true"
+        android:textColor="@color/colorTextBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
     <TextView
         android:id="@+id/prodotto"
-        android:layout_gravity="left"
+        android:layout_toEndOf="@id/qtprodotto"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="5dp"
         android:textColor="@color/colorTextBlack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,15 +25,17 @@
 
     <TextView
         android:id="@+id/costoProdotto"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/cancellaProdotto"
         android:layout_gravity="right"
-        android:background="@drawable/ic_cancel_black_24dp"
+        android:src="@drawable/ic_cancel_black_24dp"
+        android:background="@color/colorSecondary"
+        android:layout_alignParentEnd="true"
         android:layout_width="50dp"
         android:layout_height="40dp" />
 
-</LinearLayout>
+</RelativeLayout>

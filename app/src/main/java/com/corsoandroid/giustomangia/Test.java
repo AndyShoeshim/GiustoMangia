@@ -17,18 +17,18 @@ public class Test {
 
     public static ArrayList<Product> creaPortate() {
         ArrayList<Product> productArrayList = new ArrayList<>();
-        Product p1 = new Product("Whopper",5f);
-        Product p2 = new Product("Chicken Bacon", 8f);
-        Product p4 = new Product("Patatine", 1f);
-        Product p5 = new Product("Insalata", 0.5f);
-        Product p6 = new Product("Coca-cola", 1f);
-        Product p7 = new Product("Cheeseburger", 3f);
-        Product p8 = new Product("Chicken Royale", 4.50f);
-        Product p9 = new Product("Chicken Wings", 1.50f);
-        Product p10 = new Product("Waffles", 2.50f);
-        Product p11 = new Product("Gelato", 1.20f);
-        Product p12 = new Product("Kid Menu", 4.00f);
-        Product p13 = new Product("Angry Whooper", 7.50f);
+        Product p1 = new Product("Whopper",5f,0);
+        Product p2 = new Product("Chicken Bacon", 8f,0);
+        Product p4 = new Product("Patatine", 1f,0);
+        Product p5 = new Product("Insalata", 0.5f,0);
+        Product p6 = new Product("Coca-cola", 1f,0);
+        Product p7 = new Product("Cheeseburger", 3f,0);
+        Product p8 = new Product("Chicken Royale", 4.50f,0);
+        Product p9 = new Product("Chicken Wings", 1.50f,0);
+        Product p10 = new Product("Waffles", 2.50f,0);
+        Product p11 = new Product("Gelato", 1.20f,0);
+        Product p12 = new Product("Kid Menu", 4.00f,0);
+        Product p13 = new Product("Angry Whooper", 7.50f,0);
         productArrayList.add(p1);
         productArrayList.add(p2);
         productArrayList.add(p4);
@@ -63,15 +63,13 @@ public class Test {
 
     public static Ordine getOrdine() {
         ArrayList<Product> productArrayList = new ArrayList<>();
-        Product p1 = new Product("Whopper",5f);
-        Product p2 = new Product("Chicken Bacon", 8f);
-        Product p3 = new Product("Patatine", 1f);
-        Product p4 = new Product("Insalata", 0.5f);
-        Product p5 = new Product("Coca-cola", 1f);
+        Product p1 = new Product("Whopper",5f,1);
+        Product p2 = new Product("Chicken Bacon", 8f,2);
+        Product p3 = new Product("Patatine", 1f,3);
+        Product p5 = new Product("Coca-cola", 1f,1);
         productArrayList.add(p1);
         productArrayList.add(p2);
         productArrayList.add(p3);
-        productArrayList.add(p4);
         productArrayList.add(p5);
 
         Restaurant r = getData().get(1);

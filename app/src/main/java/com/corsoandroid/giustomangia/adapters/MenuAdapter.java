@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.corsoandroid.giustomangia.R;
-import com.corsoandroid.giustomangia.Test;
 import com.corsoandroid.giustomangia.Utilities;
 import com.corsoandroid.giustomangia.datamodels.Product;
 
@@ -89,7 +88,6 @@ public class MenuAdapter extends RecyclerView.Adapter {
             if (v.getId() == R.id.minusNum) {
                 if (qtPortata.getText().toString().equals("0")) {
                     Utilities.showToast(c, R.string.erroreNumPortata);
-                    return;
                 } else {
                     product.decreaseQt();
                     notifyItemChanged(getAdapterPosition());

@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.corsoandroid.giustomangia.R;
 import com.corsoandroid.giustomangia.Test;
 import com.corsoandroid.giustomangia.adapters.MenuAdapter;
+import com.corsoandroid.giustomangia.datamodels.Ordine;
 import com.corsoandroid.giustomangia.datamodels.Product;
 import com.corsoandroid.giustomangia.datamodels.Restaurant;
 
