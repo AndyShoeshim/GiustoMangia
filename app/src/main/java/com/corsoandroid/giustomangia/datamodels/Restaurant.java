@@ -1,5 +1,7 @@
 package com.corsoandroid.giustomangia.datamodels;
 
+import org.json.JSONObject;
+
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -12,6 +14,7 @@ public class Restaurant {
     private String indirizzo;
     private float ordineMinimo;
     private String url;
+    private String id;
     private ArrayList<Product> listaProdottiRistorante;
 
     public Restaurant(String nome, String indirizzo, float ordineMinimo, String url){
@@ -19,7 +22,20 @@ public class Restaurant {
         this.indirizzo=indirizzo;
         this.ordineMinimo=ordineMinimo;
         this.url=url;
+        this.id="0";
         listaProdottiRistorante = new ArrayList<>();
+    }
+
+    public Restaurant(JSONObject jsonRestoraunt) {
+        try {
+            this.nome = jsonRestoraunt.getString("name");
+            this.indirizzo = jsonRestoraunt.getString("address");
+            this.ordineMinimo = (float) jsonRestoraunt.getDouble("min_order");
+            this.url = jsonRestoraunt.getString("image_url");
+            this.id = jsonRestoraunt.getString("id");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void setListaPortateRistorante(ArrayList<Product> listaProdottiRistorante) {
@@ -44,5 +60,9 @@ public class Restaurant {
 
     public String getLogo() {
         return url;
+    }
+
+    public String getId() {
+        return id;
     }
 }

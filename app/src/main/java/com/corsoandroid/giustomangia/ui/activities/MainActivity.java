@@ -8,15 +8,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.corsoandroid.giustomangia.R;
 import com.corsoandroid.giustomangia.Test;
+import com.corsoandroid.giustomangia.Utilities;
 import com.corsoandroid.giustomangia.adapters.RestaurantAdapters;
 import com.corsoandroid.giustomangia.datamodels.Restaurant;
+import com.corsoandroid.giustomangia.services.RestController;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -24,7 +37,7 @@ import java.util.ArrayList;
  * Created by Andrea on 31/01/2019.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Response.Listener<String>,Response.ErrorListener {
 
     LinearLayout layout;
     RecyclerView restorauntRV; // le recycler view permette di visualizzare una grande quantità di dati in una view limitata
@@ -33,9 +46,10 @@ public class MainActivity extends AppCompatActivity {
     // per utilizzare una recyclerview c'è bisogno di un layout manager e di un adapter. Il primo permette
     // di misurare e posizione le item view nella recyclerview e determinare quando riciclare gli elementi non più visibili.
     // L'adapter serve per legare i dati e gli itemview legati alla visualizzazione di questi dati alla recyclerview
-    ArrayList<Restaurant> data;
+    ArrayList<Restaurant> data = new ArrayList<>();
     SharedPreferences sharedPreferences;
 
+    private static final String ENDPOINT = "restaurants";
     private static final String SharedPrefs = "com.corsoandroid.giustomangia.generalpref";
     private static final String View_Mode = "View_Mode";
 
@@ -47,11 +61,44 @@ public class MainActivity extends AppCompatActivity {
         checkDarkTheme();
         restorauntRV = findViewById(R.id.recyclerView);
         layoutManager = getLayoutManager(getSavedLayoutManager());
-        adapter = new RestaurantAdapters(this, Test.getData());
+        adapter = new RestaurantAdapters(this, data);
         adapter.setGrid(getSavedLayoutManager());
-
         restorauntRV.setAdapter(adapter);
         restorauntRV.setLayoutManager(layoutManager);
+        RestController restController = new RestController(this);
+        restController.getRequest(ENDPOINT,this,this);
+
+
+        /*Request a string response from URL
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.GET, // method type request
+                url,  // destination url
+                new Response.Listener<String>() { // answer listeners
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("TAG", " "+ response);
+                        try {
+                            JSONArray restorauntJSONArray = new JSONArray(response);
+                            for(int i=0;i<restorauntJSONArray.length();i++) {
+                                Restaurant r = new Restaurant(restorauntJSONArray.getJSONObject(i));
+                                data.add(r);
+                            }
+                            adapter.setData(data);
+                        } catch (JSONException e) {
+                            Log.e("errorJSON",e.toString());
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("TAG"," " + error.toString());
+            }
+         }
+        );
+
+        queue.add(stringRequest);
+        */
+
     }
 
 
@@ -112,5 +159,25 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView.LayoutManager getLayoutManager(boolean isGridLayout) {
         return  isGridLayout ? new GridLayoutManager(this,2) : new LinearLayoutManager(this);
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Log.e("errorMessage",error.getMessage());
+        Toast.makeText(this,error.getMessage(),Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResponse(String response) {
+        try {
+            JSONArray jsonArray = new JSONArray(response);
+            for(int i=0;i<jsonArray.length();i++){
+                Restaurant r = new Restaurant(jsonArray.getJSONObject(i));
+                data.add(r);
+            }
+            adapter.setData(data);
+        } catch (JSONException e) {
+            Log.e("exceptionMessage",e.getMessage());
+        }
     }
 }

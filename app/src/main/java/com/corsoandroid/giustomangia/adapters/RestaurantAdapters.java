@@ -27,6 +27,15 @@ public class RestaurantAdapters extends RecyclerView.Adapter {
     private Context context;
     private static boolean isGrid;
 
+    public void setData(ArrayList<Restaurant> data) {
+        this.data = data;
+        notifyDataSetChanged();
+    }
+
+    public ArrayList<Restaurant> getData() {
+        return data;
+    }
+
     public void setGrid(boolean grid) {
         isGrid = grid;
     }
@@ -39,6 +48,12 @@ public class RestaurantAdapters extends RecyclerView.Adapter {
         inflater = LayoutInflater.from(context);
         this.data = data;
         this.context = context;
+    }
+
+    public RestaurantAdapters(Context context) {
+        inflater = LayoutInflater.from(context);
+        this.data = getData();
+
     }
 
     //questo metoto serve a inizializzare le variabili relative la viewholder dei dati
@@ -85,7 +100,10 @@ public class RestaurantAdapters extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(context, ShopActivity.class);
-                    i.putExtra("nomeRistorante",restorauntName.getText().toString());
+                    i.putExtra("nomeRistorante",data.get(getAdapterPosition()).getNome());
+                    i.putExtra("idRistorante",data.get(getAdapterPosition()).getId());
+                    i.putExtra("ordineMinimo",data.get(getAdapterPosition()).getOrdineMinimo());
+                    i.putExtra("logoRistorante",data.get(getAdapterPosition()).getLogo());
                     context.startActivity(i);
                 }
             });

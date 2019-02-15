@@ -24,7 +24,6 @@ public class MenuAdapter extends RecyclerView.Adapter {
     LayoutInflater layoutInflater;
     Context c;
     ArrayList<Product> listPortate;
-
     onQuantityChangeListener onQuantityChangeListener;
 
     public void setOnQuantityChangeListener(MenuAdapter.onQuantityChangeListener onQuantityChangeListener) {
@@ -39,6 +38,21 @@ public class MenuAdapter extends RecyclerView.Adapter {
         this.c = c;
         this.layoutInflater = LayoutInflater.from(c);
         this.listPortate = listPortate;
+    }
+
+    public MenuAdapter(Context c){
+        this.c=c;
+        this.layoutInflater = LayoutInflater.from(c);
+        listPortate = getData();
+    }
+
+    public void setData(ArrayList<Product> listPortate) {
+        this.listPortate = listPortate;
+        notifyDataSetChanged();
+    }
+
+    public ArrayList<Product> getData() {
+        return listPortate;
     }
 
 

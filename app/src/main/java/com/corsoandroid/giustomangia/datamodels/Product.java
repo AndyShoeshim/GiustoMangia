@@ -1,5 +1,8 @@
 package com.corsoandroid.giustomangia.datamodels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by Andrea on 05/02/2019.
  */
@@ -15,6 +18,17 @@ public class Product {
         this.costo=costo;
         this.quantita=quantita;
         calcoloTot();
+    }
+
+    public Product(JSONObject jsonProduct) {
+       try {
+           this.nome = jsonProduct.getString("name");
+           this.costo = (float)jsonProduct.getDouble("price");
+           this.quantita=0;
+           this.totale=0;
+       } catch (JSONException e) {
+           e.printStackTrace();
+       }
     }
 
     public void setNome(String nome) {
