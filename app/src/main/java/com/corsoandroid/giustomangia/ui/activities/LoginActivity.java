@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -11,14 +12,19 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.corsoandroid.giustomangia.R;
 import com.corsoandroid.giustomangia.Utilities;
+import com.corsoandroid.giustomangia.services.RestController;
 
 /**
  * Created by Andrea on 31/01/2019.
  */
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, Response.Listener<String>,Response.ErrorListener {
+
+    private static final String endpoint = "auth/local";
 
     LinearLayout l;
     Button loginButton;
@@ -26,6 +32,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Switch s;
     EditText emailText, passText;
     boolean darkTheme=false;
+    RestController restController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +44,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         passText = findViewById(R.id.testoPassword);
         s = findViewById(R.id.switchColor);
         l=findViewById(R.id.layout); // INIZIALIZZAZIONE DELLE VARIABILI RELATIVE AI COMPONENTI
+
+        restController = new RestController(this);
 
         if (hasInvitationCode()) {
             registerButton.setVisibility(View.VISIBLE);
@@ -69,6 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(view.getId()==R.id.loginButton) {
             if(doLogin()) {
                 Intent i = new Intent(this, MainActivity.class);
+                restController.postLoginRequest(endpoint,this,this,emailText.getText().toString(),passText.getText().toString());
                 i.putExtra("statoTema",darkTheme);
                 startActivity(i);
             }
@@ -97,5 +107,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
            Utilities.showToast(this, R.string.loginEmailBad_text);
            return false;
        }
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Log.e("error",error.toString());
+        Utilities.showToast(this,R.string.loginBad_text);
+    }
+
+    @Override
+    public void onResponse(String response) {
+        Log.i("login",response.toCharArray().toString());
+        Utilities.showToast(this,R.string.loginOk_text);
     }
 }

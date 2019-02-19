@@ -2,12 +2,14 @@
     <string name="app_name">GiustoMangia</string>
     <string name="email_hint">Inserisci e-mail</string>
     <string name="password_hint">Inserisci password</string>
+    <string name="username_hint">Inserisci username</string>
     <string name="passwordConfirm_hint">Conferma password</string>
     <string name="login_text">LOGIN</string>
     <string name="register_text">REGISTER</string>
     <string name="registerGood_text">Registrazione effettuata!</string>
     <string name="registerBad_text">Errore nella password e/o e-mail, registrazione non effettuata!</string>
     <string name="loginOk_text">Login effettuato correttamente!</string>
+    <string name="loginBad_text">Non è stato possibile effettuare il login!</string>
     <string name="loginPassBad_text">Password non valida</string>
     <string name="loginEmailBad_text">E-mail non valida</string>
     <string name="cellNumberError_text">Numero di telefono non valido!</string>

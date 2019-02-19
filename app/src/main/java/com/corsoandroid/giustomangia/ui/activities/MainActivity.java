@@ -67,38 +67,6 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         restorauntRV.setLayoutManager(layoutManager);
         RestController restController = new RestController(this);
         restController.getRequest(ENDPOINT,this,this);
-
-
-        /*Request a string response from URL
-        StringRequest stringRequest = new StringRequest(
-                Request.Method.GET, // method type request
-                url,  // destination url
-                new Response.Listener<String>() { // answer listeners
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("TAG", " "+ response);
-                        try {
-                            JSONArray restorauntJSONArray = new JSONArray(response);
-                            for(int i=0;i<restorauntJSONArray.length();i++) {
-                                Restaurant r = new Restaurant(restorauntJSONArray.getJSONObject(i));
-                                data.add(r);
-                            }
-                            adapter.setData(data);
-                        } catch (JSONException e) {
-                            Log.e("errorJSON",e.toString());
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("TAG"," " + error.toString());
-            }
-         }
-        );
-
-        queue.add(stringRequest);
-        */
-
     }
 
 
