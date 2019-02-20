@@ -1,6 +1,7 @@
 package com.corsoandroid.giustomangia.ui.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.corsoandroid.giustomangia.R;
 import com.corsoandroid.giustomangia.Utilities;
+import com.corsoandroid.giustomangia.datamodels.User;
 import com.corsoandroid.giustomangia.services.RestController;
 
 import org.json.JSONException;
@@ -40,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity implements Response.Erro
     private static final String endpoint= "auth/local/register";
     SharedPreferences.Editor spEditor;
     SharedPreferences sharedPreferences;
+    static User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +56,7 @@ public class RegisterActivity extends AppCompatActivity implements Response.Erro
         b=findViewById(R.id.registerButton);
         layout=findViewById(R.id.layoutRegister);
         checkDarkTheme();
-        sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
-        spEditor = sharedPreferences.edit();
+        sharedPreferences = getSharedPreferences("sharedPrefs",Context.MODE_PRIVATE);
         restController = new RestController(this);
 
         email.addTextChangedListener(new TextWatcher() {
@@ -155,11 +157,13 @@ public class RegisterActivity extends AppCompatActivity implements Response.Erro
         Log.i("registrazione",response);
         try {
             JSONObject jsonObject = new JSONObject(response);
-            String token = jsonObject.getString("jwt");
-            Log.i("tokenRegistrazione",token);
-            spEditor.putString("tokenUser",token);
+            user = new User(jsonObject);
+            Log.i("tokenRegistrazione",user.getToken());
+            spEditor = sharedPreferences.edit();
+            spEditor.putString("tokenUser",user.getToken());
             spEditor.apply();
             Utilities.showToast(this,R.string.registerGood_text);
+            startActivity(new Intent(this,MainActivity.class));
         } catch (JSONException e) {
             Log.e("errorRegistrazione",e.getMessage());
         }

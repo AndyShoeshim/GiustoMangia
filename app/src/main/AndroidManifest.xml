@@ -25,6 +25,9 @@
         <activity android:name=".ui.activities.ShopActivity">
         </activity>
 
+        <activity android:name=".ui.activities.ProfileActivity">
+        </activity>
+
         <activity android:name=".ui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,6 +1,9 @@
 package com.corsoandroid.giustomangia.ui.activities;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +21,9 @@ import com.corsoandroid.giustomangia.R;
 import com.corsoandroid.giustomangia.Utilities;
 import com.corsoandroid.giustomangia.services.RestController;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by Andrea on 31/01/2019.
  */
@@ -33,6 +39,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText emailText, passText;
     boolean darkTheme=false;
     RestController restController;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor spEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +52,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         passText = findViewById(R.id.testoPassword);
         s = findViewById(R.id.switchColor);
         l=findViewById(R.id.layout); // INIZIALIZZAZIONE DELLE VARIABILI RELATIVE AI COMPONENTI
+
+        sharedPreferences = getSharedPreferences("sharedPref",Context.MODE_PRIVATE);
 
         restController = new RestController(this);
 
@@ -77,10 +87,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         if(view.getId()==R.id.loginButton) {
             if(doLogin()) {
-                Intent i = new Intent(this, MainActivity.class);
                 restController.postLoginRequest(endpoint,this,this,emailText.getText().toString(),passText.getText().toString());
-                i.putExtra("statoTema",darkTheme);
-                startActivity(i);
             }
         } else if(view.getId()==R.id.registerButton) {
             Intent i = new Intent(this,RegisterActivity.class);
@@ -117,7 +124,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onResponse(String response) {
-        Log.i("login",response.toCharArray().toString());
-        Utilities.showToast(this,R.string.loginOk_text);
+        Log.i("login", response.toCharArray().toString());
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            String token = jsonObject.getString("jwt");
+            spEditor = sharedPreferences.edit();
+            spEditor.putString("tokenLogin",token);
+            spEditor.apply();
+            Utilities.showToast(this, R.string.loginOk_text);
+            setResult(Activity.RESULT_OK);
+            finish();
+        } catch (JSONException e) {
+            Log.e("erroreLogin",e.getMessage());
+        }
     }
 }

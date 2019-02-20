@@ -1,12 +1,19 @@
 package com.corsoandroid.giustomangia.ui.activities;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -47,11 +54,14 @@ public class ShopActivity extends AppCompatActivity implements MenuAdapter.onQua
     MenuAdapter menuAdapter;
     ProgressBar progressBar;
     Button pulsanteCheckout;
+    Menu m;
 
     Restaurant restaurant;
 
     private float total;
     private String endpoint;
+    public String token;
+    public static final int REQUEST_CODE = 101;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,9 +71,49 @@ public class ShopActivity extends AppCompatActivity implements MenuAdapter.onQua
         initialize();
         nomeRistorante.setText(getIntent().getStringExtra("nomeRistorante"));
         Glide.with(this).load(getIntent().getStringArrayExtra("logoRistorante")).into(logoRisotorante);
-
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        //token = getSharedPreferences("sharedPref", Context.MODE_PRIVATE).getString("tokenLogin",null);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        token = getSharedPreferences("sharedPref", Context.MODE_PRIVATE).getString("tokenLogin",null);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        token = getSharedPreferences("sharedPref", Context.MODE_PRIVATE).getString("tokenLogin",null);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater mi = getMenuInflater(); // classe che trasforma risorsa XML in oggetto
+        mi.inflate(R.menu.menu_main, menu);
+        this.m = menu;
+        if(token==null){
+            m.getItem(1).setTitle("PROFILE");
+        }  else
+        {
+            m.getItem(1).setTitle("LOGIN");
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.login_menu){
+            if(item.getTitle().equals("PROFILE"))
+            {
+                startActivity(new Intent(this,ProfileActivity.class));
+            } else if(item.getTitle().equals("LOGIN"))
+            {
+                startActivity(new Intent(this,LoginActivity.class));
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void initialize() {
         layout = findViewById(R.id.relativeLayoutCheckout);
@@ -123,6 +173,23 @@ public class ShopActivity extends AppCompatActivity implements MenuAdapter.onQua
     @Override
     public void onClick(View v) {
         if(v.getId()==pulsanteCheckout.getId()){
+            /*
+            Intent i = new Intent(this,CheckoutActivity.class);
+            startActivity(i);
+            */
+            if(token==null){
+                Intent i = new Intent(this,LoginActivity.class);
+                startActivityForResult(i,REQUEST_CODE);
+            } else {
+                Intent i = new Intent(this,CheckoutActivity.class);
+                startActivity(i);
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode==REQUEST_CODE && resultCode== Activity.RESULT_OK) {
             Intent i = new Intent(this,CheckoutActivity.class);
             startActivity(i);
         }
