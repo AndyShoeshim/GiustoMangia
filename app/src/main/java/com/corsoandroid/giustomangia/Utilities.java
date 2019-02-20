@@ -12,6 +12,9 @@ import android.widget.Toast;
 public  class Utilities {
     // CLASSE NELLA QUALE CI SONO I METODI RIDONDANTI
 
+    public static final String LOGIN_ACTION = "LOGIN_ACTION";
+    public static final String LOGOUT_ACTION = "LOGOUT_RECEIVER";
+
     public static boolean checkEmail(Context c,EditText et) {
         String email = et.getText().toString();
         if(Patterns.EMAIL_ADDRESS.matcher(email).matches())

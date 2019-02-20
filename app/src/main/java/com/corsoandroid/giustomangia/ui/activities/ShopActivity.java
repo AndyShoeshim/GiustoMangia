@@ -1,12 +1,15 @@
 package com.corsoandroid.giustomangia.ui.activities;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +29,7 @@ import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.corsoandroid.giustomangia.R;
 import com.corsoandroid.giustomangia.Test;
+import com.corsoandroid.giustomangia.Utilities;
 import com.corsoandroid.giustomangia.adapters.MenuAdapter;
 import com.corsoandroid.giustomangia.datamodels.Ordine;
 import com.corsoandroid.giustomangia.datamodels.Product;
@@ -63,6 +67,9 @@ public class ShopActivity extends AppCompatActivity implements MenuAdapter.onQua
     public String token;
     public static final int REQUEST_CODE = 101;
 
+    public LoginShop loginShop;
+    public LogoutShop logoutShop;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +79,19 @@ public class ShopActivity extends AppCompatActivity implements MenuAdapter.onQua
         nomeRistorante.setText(getIntent().getStringExtra("nomeRistorante"));
         Glide.with(this).load(getIntent().getStringArrayExtra("logoRistorante")).into(logoRisotorante);
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        loginShop = new LoginShop();
+        logoutShop = new LogoutShop();
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(loginShop, new IntentFilter(Utilities.LOGIN_ACTION));
+        LocalBroadcastManager.getInstance(this).registerReceiver(loginShop, new IntentFilter(Utilities.LOGOUT_ACTION));
         //token = getSharedPreferences("sharedPref", Context.MODE_PRIVATE).getString("tokenLogin",null);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(loginShop);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(logoutShop);
     }
 
     @Override
@@ -92,12 +111,6 @@ public class ShopActivity extends AppCompatActivity implements MenuAdapter.onQua
         MenuInflater mi = getMenuInflater(); // classe che trasforma risorsa XML in oggetto
         mi.inflate(R.menu.menu_main, menu);
         this.m = menu;
-        if(token==null){
-            m.getItem(1).setTitle("PROFILE");
-        }  else
-        {
-            m.getItem(1).setTitle("LOGIN");
-        }
         return true;
     }
 
@@ -179,7 +192,7 @@ public class ShopActivity extends AppCompatActivity implements MenuAdapter.onQua
             */
             if(token==null){
                 Intent i = new Intent(this,LoginActivity.class);
-                startActivityForResult(i,REQUEST_CODE);
+                startActivity(i);
             } else {
                 Intent i = new Intent(this,CheckoutActivity.class);
                 startActivity(i);
@@ -187,13 +200,14 @@ public class ShopActivity extends AppCompatActivity implements MenuAdapter.onQua
         }
     }
 
-    @Override
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode==REQUEST_CODE && resultCode== Activity.RESULT_OK) {
             Intent i = new Intent(this,CheckoutActivity.class);
             startActivity(i);
         }
-    }
+    } */
+
 
     @Override
     public void onErrorResponse(VolleyError error) {
@@ -213,4 +227,21 @@ public class ShopActivity extends AppCompatActivity implements MenuAdapter.onQua
             Log.e("jsonException",e.getMessage());
         }
     }
+
+    public class LoginShop extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            m.findItem(R.id.login_menu).setTitle("PROFILE");
+        }
+    }
+
+    public class LogoutShop extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            m.findItem(R.id.login_menu).setTitle("LOGIN");
+        }
+    }
+
 }

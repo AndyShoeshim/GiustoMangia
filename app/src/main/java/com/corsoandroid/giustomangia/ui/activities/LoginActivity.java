@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -132,8 +133,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             spEditor.putString("tokenLogin",token);
             spEditor.apply();
             Utilities.showToast(this, R.string.loginOk_text);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Utilities.LOGIN_ACTION));
+            /*
             setResult(Activity.RESULT_OK);
-            finish();
+            finish();*/
+
         } catch (JSONException e) {
             Log.e("erroreLogin",e.getMessage());
         }

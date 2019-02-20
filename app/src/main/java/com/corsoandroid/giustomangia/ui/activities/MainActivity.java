@@ -1,9 +1,13 @@
 package com.corsoandroid.giustomangia.ui.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -53,6 +57,11 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     private static final String SharedPrefs = "com.corsoandroid.giustomangia.generalpref";
     private static final String View_Mode = "View_Mode";
 
+    private LoginReceiver receiver;
+    private LogoutReceiver receiver2;
+
+    private Menu m;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,13 +76,26 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         restorauntRV.setLayoutManager(layoutManager);
         RestController restController = new RestController(this);
         restController.getRequest(ENDPOINT,this,this);
+
+        receiver = new LoginReceiver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver,new IntentFilter(Utilities.LOGIN_ACTION));
+
+        receiver2 = new LogoutReceiver();
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver2,new IntentFilter(Utilities.LOGOUT_ACTION));
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver2);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater mi = getMenuInflater(); // classe che trasforma risorsa XML in oggetto
         mi.inflate(R.menu.menu_main, menu);
+        this.m=menu;
         return true;
     }
 
@@ -88,10 +110,15 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
                 item.setIcon(R.drawable.ic_apps_black_24dp);
             }
         } // azioni da svolgere alla pressione del tasto per cambiare layout
-        if (item.getItemId() == R.id.login_menu) {
-            startActivity(new Intent(this, LoginActivity.class));
-            return true; // azioni da svolgere alla pressione dell'opzione LOGIN
-        } else if (item.getItemId() == R.id.checkout_menu) {
+        if(item.getItemId()==R.id.login_menu) {
+            if(item.getTitle().equals("PROFILE"))
+            {
+                startActivity(new Intent(this,ProfileActivity.class));
+            } else if(item.getTitle().equals("LOGIN"))
+            {
+                startActivity(new Intent(this,LoginActivity.class));
+            }
+        }else if (item.getItemId() == R.id.checkout_menu) {
             startActivity(new Intent(this, CheckoutActivity.class));
             return true; // azioni da svolgere alla pressione dell'opzione CHECKOUT
         }
@@ -146,6 +173,22 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
             adapter.setData(data);
         } catch (JSONException e) {
             Log.e("exceptionMessage",e.getMessage());
+        }
+    }
+
+    public class LoginReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            m.findItem(R.id.login_menu).setTitle("PROFILE");
+        }
+    }
+
+    public class LogoutReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            m.findItem(R.id.login_menu).setTitle("LOGIN");
         }
     }
 }
