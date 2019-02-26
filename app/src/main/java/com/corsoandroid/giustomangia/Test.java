@@ -78,4 +78,17 @@ public class Test {
 
         return ordine;
     }
+
+
+    public static ArrayList<Product> getProducts() {
+        Product p8 = new Product("Chicken Royale", 4.50f,0);
+        Product p9 = new Product("Chicken Wings", 1.50f,0);
+        Product p10 = new Product("Waffles", 2.50f,0);
+        ArrayList<Product> listaProdotti = new ArrayList<>();
+        listaProdotti.add(p8);
+        listaProdotti.add(p9);
+        listaProdotti.add(p10);
+
+        return listaProdotti;
+    }
 }

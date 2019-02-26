@@ -53,10 +53,12 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
     ArrayList<Restaurant> data = new ArrayList<>();
     SharedPreferences sharedPreferences;
 
+
     private static final String ENDPOINT = "restaurants";
     private static final String SharedPrefs = "com.corsoandroid.giustomangia.generalpref";
     private static final String View_Mode = "View_Mode";
 
+    String token;
     private LoginReceiver receiver;
     private LogoutReceiver receiver2;
 
@@ -77,6 +79,8 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         RestController restController = new RestController(this);
         restController.getRequest(ENDPOINT,this,this);
 
+        token = getSharedPreferences("sharedPref", Context.MODE_PRIVATE).getString("tokenLogin",null);
+
         receiver = new LoginReceiver();
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver,new IntentFilter(Utilities.LOGIN_ACTION));
 
@@ -96,6 +100,12 @@ public class MainActivity extends AppCompatActivity implements Response.Listener
         MenuInflater mi = getMenuInflater(); // classe che trasforma risorsa XML in oggetto
         mi.inflate(R.menu.menu_main, menu);
         this.m=menu;
+
+        if(token!=null)
+            m.findItem(R.id.login_menu).setTitle("PROFILE");
+        else
+            m.findItem(R.id.login_menu).setTitle("LOGIN");
+
         return true;
     }
 

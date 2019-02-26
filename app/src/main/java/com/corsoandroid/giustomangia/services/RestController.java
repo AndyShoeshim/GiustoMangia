@@ -8,9 +8,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.corsoandroid.giustomangia.Utilities;
+
+import org.json.JSONObject;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -25,6 +28,7 @@ public class RestController {
     private final static String BASE_URL = "http://138.68.86.70";
     private final String VERSION = "/";
     private RequestQueue queue;
+
 
     public RestController(Context context) {
         queue = Volley.newRequestQueue(context);
@@ -69,5 +73,15 @@ public class RestController {
         };
 
         queue.add(stringRequest);
+     }
+
+     public void postCORequest(String endpoint, final JSONObject jsonObject, Response.Listener<JSONObject> success, final Map<String,String> header, Response.ErrorListener error){
+         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,BASE_URL.concat(VERSION).concat(endpoint),jsonObject,success,error) {
+             @Override
+             public Map<String, String> getHeaders() throws AuthFailureError {
+                 return header;
+             }
+         };
+         queue.add(jsonObjectRequest);
      }
 }

@@ -5,6 +5,11 @@ import android.util.Patterns;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.corsoandroid.giustomangia.datamodels.Product;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by Andrea on 31/01/2019.
  */
@@ -44,6 +49,17 @@ public  class Utilities {
 
     public static void showToast(Context c, int id) {
         Toast.makeText(c, id, Toast.LENGTH_SHORT).show();
+    }
+
+    public static JSONObject parseToJSON(Product p){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("name",p.getNome());
+            return jsonObject;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

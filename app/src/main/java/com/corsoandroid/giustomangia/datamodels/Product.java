@@ -24,7 +24,7 @@ public class Product {
        try {
            this.nome = jsonProduct.getString("name");
            this.costo = (float)jsonProduct.getDouble("price");
-           this.quantita=0;
+           this.quantita= jsonProduct.getInt("quantita");
            this.totale=0;
        } catch (JSONException e) {
            e.printStackTrace();

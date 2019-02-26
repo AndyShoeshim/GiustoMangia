@@ -43,6 +43,11 @@ public class CarrelloAdapter extends RecyclerView.Adapter implements OnProductEl
         layoutInflater = LayoutInflater.from(c);
     }
 
+    public void setOrdine(Ordine ordine) {
+        this.ordine = ordine;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -56,7 +61,7 @@ public class CarrelloAdapter extends RecyclerView.Adapter implements OnProductEl
         CarrelloViewHolder cvh = (CarrelloViewHolder) viewHolder;
         cvh.qtprodotto.setText(String.valueOf(ordine.getProductArrayList().get(i).getQuantita()) + "x");
         cvh.prodotto.setText(ordine.getProductArrayList().get(i).getNome());
-        cvh.costoProdotto.setText(String.valueOf(Test.getOrdine().getProductArrayList().get(i).totale));
+        cvh.costoProdotto.setText(String.valueOf(ordine.getProductArrayList().get(i).totale));
     }
 
     @Override

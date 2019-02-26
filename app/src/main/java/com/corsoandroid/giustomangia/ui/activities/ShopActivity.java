@@ -1,13 +1,12 @@
 package com.corsoandroid.giustomangia.ui.activities;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +33,7 @@ import com.corsoandroid.giustomangia.adapters.MenuAdapter;
 import com.corsoandroid.giustomangia.datamodels.Ordine;
 import com.corsoandroid.giustomangia.datamodels.Product;
 import com.corsoandroid.giustomangia.datamodels.Restaurant;
+import com.corsoandroid.giustomangia.services.AppDatabase;
 import com.corsoandroid.giustomangia.services.RestController;
 
 import org.json.JSONArray;
@@ -41,6 +41,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by Andrea on 31/01/2019.
@@ -70,12 +71,21 @@ public class ShopActivity extends AppCompatActivity implements MenuAdapter.onQua
     public LoginShop loginShop;
     public LogoutShop logoutShop;
 
+    public static String idRistorante;
+    public static String idUtente;
+    public static ArrayList<Product> listaProdotti;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
-        endpoint = "restaurants".concat("/" + getIntent().getStringExtra("idRistorante"));
+
+        idRistorante = getIntent().getStringExtra("idRistorante");
+        endpoint = "restaurants".concat("/" + idRistorante);
+        idUtente = getIntent().getStringExtra("idUser");
+        //listaProdotti = Test.getProducts();
         initialize();
+
         nomeRistorante.setText(getIntent().getStringExtra("nomeRistorante"));
         Glide.with(this).load(getIntent().getStringArrayExtra("logoRistorante")).into(logoRisotorante);
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
@@ -84,7 +94,7 @@ public class ShopActivity extends AppCompatActivity implements MenuAdapter.onQua
 
         LocalBroadcastManager.getInstance(this).registerReceiver(loginShop, new IntentFilter(Utilities.LOGIN_ACTION));
         LocalBroadcastManager.getInstance(this).registerReceiver(loginShop, new IntentFilter(Utilities.LOGOUT_ACTION));
-        //token = getSharedPreferences("sharedPref", Context.MODE_PRIVATE).getString("tokenLogin",null);
+        token = getSharedPreferences("sharedPref", Context.MODE_PRIVATE).getString("tokenLogin",null);
     }
 
     @Override
@@ -111,6 +121,10 @@ public class ShopActivity extends AppCompatActivity implements MenuAdapter.onQua
         MenuInflater mi = getMenuInflater(); // classe che trasforma risorsa XML in oggetto
         mi.inflate(R.menu.menu_main, menu);
         this.m = menu;
+        if(token!=null)
+            m.findItem(R.id.login_menu).setTitle("PROFILE");
+        else
+            m.findItem(R.id.login_menu).setTitle("LOGIN");
         return true;
     }
 
@@ -169,6 +183,7 @@ public class ShopActivity extends AppCompatActivity implements MenuAdapter.onQua
 
     @Override
     public void onChange(float price) {
+
         updateTotal(price);
         updateProgressBar((int)(total*100));
         totaleCarrello.setText(String.format("TOTALE: %s $", String.valueOf(total)));
@@ -194,8 +209,7 @@ public class ShopActivity extends AppCompatActivity implements MenuAdapter.onQua
                 Intent i = new Intent(this,LoginActivity.class);
                 startActivity(i);
             } else {
-                Intent i = new Intent(this,CheckoutActivity.class);
-                startActivity(i);
+                new SaveOrder().execute();
             }
         }
     }
@@ -241,6 +255,30 @@ public class ShopActivity extends AppCompatActivity implements MenuAdapter.onQua
         @Override
         public void onReceive(Context context, Intent intent) {
             m.findItem(R.id.login_menu).setTitle("LOGIN");
+        }
+    }
+
+    public class SaveOrder extends AsyncTask<Void,Void,Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            ArrayList<Product> lista = menuAdapter.getData();
+            lista.removeIf(l->l.getQuantita()<1);
+            Restaurant r = Test.getData().get(0);
+            Ordine o = new Ordine(r,lista);
+
+            AppDatabase.getAppDatabase(ShopActivity.this).orderDao().insert(o);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            Intent i = new Intent(ShopActivity.this,CheckoutActivity.class);
+            i.putExtra("idRistorante",idRistorante);
+            i.putExtra("idUser",idUtente);
+            i.putExtra("totale",total);
+            startActivity(i);
+            startActivity(i);
         }
     }
 

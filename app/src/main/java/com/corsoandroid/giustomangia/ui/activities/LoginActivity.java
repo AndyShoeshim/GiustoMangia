@@ -129,14 +129,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         try {
             JSONObject jsonObject = new JSONObject(response);
             String token = jsonObject.getString("jwt");
+            String id = jsonObject.getJSONObject("user").getString("_id");
             spEditor = sharedPreferences.edit();
             spEditor.putString("tokenLogin",token);
+            spEditor.putString("idUser",id);
             spEditor.apply();
             Utilities.showToast(this, R.string.loginOk_text);
             LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(Utilities.LOGIN_ACTION));
             /*
             setResult(Activity.RESULT_OK);
-            finish();*/
+            finish();
+            */
 
         } catch (JSONException e) {
             Log.e("erroreLogin",e.getMessage());
